@@ -2,27 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Network for AI providers -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!-- Overlay (Dynamic Island / Notch) -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
-    <!-- Voice -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-    <!-- Notifications & Live Updates -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- Vibration feedback for gestures -->
     <uses-permission android:name="android.permission.VIBRATE" />
-
-    <!-- Optional: flashlight toggle -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
@@ -37,7 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Aether"
-        tools:targetApi="35">
+        tools:targetApi="34">
 
         <activity
             android:name=".MainActivity"
@@ -56,7 +42,6 @@
             android:theme="@style/Theme.Aether"
             android:excludeFromRecents="true" />
 
-        <!-- Accessibility Service: notch gestures + cursor + UI tree for agent -->
         <service
             android:name=".service.AetherAccessibilityService"
             android:exported="false"
@@ -69,33 +54,10 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <!-- Overlay / Island foreground service -->
-        <service
-            android:name=".service.IslandService"
-            android:exported="false"
-            android:foregroundServiceType="specialUse">
-            <property
-                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="Dynamic Island overlay and notch gesture host" />
-        </service>
+        <service android:name=".service.IslandService" android:exported="false" />
+        <service android:name=".service.ScreenCaptureService" android:exported="false" />
+        <service android:name=".service.CursorTriggerService" android:exported="false" />
 
-        <!-- Screen capture helper (MediaProjection) -->
-        <service
-            android:name=".service.ScreenCaptureService"
-            android:exported="false"
-            android:foregroundServiceType="mediaProjection" />
-
-        <!-- Quick Cursor edge triggers -->
-        <service
-            android:name=".service.CursorTriggerService"
-            android:exported="false"
-            android:foregroundServiceType="specialUse">
-            <property
-                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="One-hand cursor edge triggers" />
-        </service>
-
-        <!-- Notification listener (feeds Dynamic Island) -->
         <service
             android:name=".service.AetherNotificationListener"
             android:exported="false"
@@ -104,6 +66,5 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-
     </application>
 </manifest>

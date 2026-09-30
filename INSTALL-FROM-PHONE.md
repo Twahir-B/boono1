@@ -1,42 +1,56 @@
-# Install Aether without a PC (phone only)
+# Install Aether using only your phone
 
-## Option A — GitHub Actions (recommended, free)
+## Common mistakes
+1. Uploading the ZIP file itself instead of the files inside the Aether folder
+2. Not opening Actions and clicking "Run workflow"
+3. Looking for the APK in code files - it is under Artifacts after a green build
 
-1. On your phone browser, open https://github.com/new  
-   - Create a **public** repository named `Aether` (or any name).  
-   - Do **not** add README if you will upload the zip.
+## Steps
 
-2. Upload the project:
-   - Open the new repo → **Add file** → **Upload files**  
-   - Upload everything inside the `Aether` folder (or the zip contents).  
-   - Commit.
+### 1. GitHub account
+https://github.com/signup (or log in)
 
-   Or use the GitHub mobile app to push if you prefer.
+### 2. New repository
+https://github.com/new
+- Name: Aether
+- Public
+- Do NOT add README
+- Create repository
 
-3. Build the APK:
-   - Open the repo → tab **Actions**  
-   - Select workflow **Build APK** → **Run workflow** → **Run**  
-   - Wait 3–6 minutes until the green check appears.
+### 3. Upload files
+1. Unzip Aether-android-source.zip on your phone
+2. Open the folder named Aether
+3. On GitHub: Add file -> Upload files
+4. Upload EVERYTHING inside Aether (app folder, gradle folder, .github, build.gradle.kts, settings.gradle.kts, gradlew, etc.)
+5. Commit changes
 
-4. Download:
-   - Open the finished run → **Artifacts** → **aether-debug-apk**  
-   - Download the zip, unzip, get `app-debug.apk`.
+The repo root must show folders: app, gradle, .github
+and files: build.gradle.kts, settings.gradle.kts, gradlew
 
-5. Install on Android 10:
-   - Open the APK file  
-   - Allow “Install unknown apps” for your browser/Files app  
-   - Install.
+### 4. Build
+1. Actions tab
+2. Build APK (left)
+3. Run workflow -> Run workflow
+4. Wait for green check (3-8 min)
 
-## Option B — Ask a friend with a PC
+If red X: open the failed job, expand "Build debug APK", copy the error and send it here.
 
-Send them `Aether-android-source.zip`. They open it in Android Studio → Build APK → send you `app-debug.apk`.
+### 5. Download APK
+1. Open the green run
+2. Artifacts -> Aether-APK
+3. Download, unzip, open app-debug.apk
+4. Allow install unknown apps, install
 
-## After install
+### 6. Setup on Android 10
+1. Enable Accessibility for Aether
+2. Allow Display over other apps
+3. Add API key
+4. Start Island
 
-1. Open Aether  
-2. Enable **Accessibility** for Aether  
-3. Allow **Display over other apps**  
-4. Add your API key  
-5. Start Island / Cursor  
-
-Your keys stay on the phone.
+## Tell me which step fails
+A) GitHub account/repo
+B) Upload
+C) Actions red X (paste error)
+D) No APK artifact
+E) App crashes after install
+F) Permissions / Island not working

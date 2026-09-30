@@ -15,5 +15,6 @@ fun AetherNav() {
         composable("settings") { SettingsScreen(nav) }
         composable("keys") { ApiKeysScreen(nav) }
         composable("permissions") { PermissionsScreen(nav) }
+        composable("gestures") { GestureSettingsScreen(nav) }
     }
 }
