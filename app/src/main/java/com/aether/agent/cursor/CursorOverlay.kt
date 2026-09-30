@@ -51,8 +51,8 @@ class CursorController(private val context: Context) {
         }
 
         tracker.onMove = { dx, dy ->
-            trackerParams.x = (trackerParams.x + dx).coerceIn(0, metrics.widthPixels - trackerParams.width)
-            trackerParams.y = (trackerParams.y + dy).coerceIn(0, metrics.heightPixels - trackerParams.height)
+            trackerParams.x = (trackerParams.x + dx.toInt()).coerceIn(0, metrics.widthPixels - trackerParams.width)
+            trackerParams.y = (trackerParams.y + dy.toInt()).coerceIn(0, metrics.heightPixels - trackerParams.height)
             wm.updateViewLayout(tracker, trackerParams)
 
             // Amplify movement for cursor (reach top from bottom half)
