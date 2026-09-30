@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aether</string>
+    <string name="accessibility_service_description">Aether uses Accessibility to create the interactive notch zone, one-hand cursor, and to let the AI agent read the screen and perform taps/swipes you approve. It does not log keystrokes or send passwords.</string>
+    <string name="island_channel_name">Aether Island</string>
+    <string name="island_channel_desc">Dynamic Island and agent status</string>
+    <string name="notification_listener_desc">Lets Aether show selected notifications and media in the Dynamic Island.</string>
+</resources>
