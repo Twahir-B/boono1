@@ -2,6 +2,7 @@ package com.aether.agent.service
 
 import android.app.*
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.graphics.PixelFormat
 import android.hardware.display.DisplayManager
@@ -32,16 +33,35 @@ class ScreenCaptureService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startForeground(NOTIF_ID, buildNotification())
         val resultCode = intent?.getIntExtra(EXTRA_RESULT_CODE, 0) ?: 0
         @Suppress("DEPRECATION")
         val data = intent?.getParcelableExtra<Intent>(EXTRA_DATA)
-        if (resultCode != 0 && data != null) {
-            val mpm = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-            mediaProjection = mpm.getMediaProjection(resultCode, data)
-            setupVirtualDisplay()
+        if (resultCode == 0 || data == null) {
+            // Restarted by the system without a fresh permission grant: can't capture.
+            stopSelf()
+            return START_NOT_STICKY
         }
-        return START_STICKY
+        try {
+            val n = buildNotification()
+            if (Build.VERSION.SDK_INT >= 29) {
+                startForeground(NOTIF_ID, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)
+            } else {
+                startForeground(NOTIF_ID, n)
+            }
+            val mpm = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+            val mp = mpm.getMediaProjection(resultCode, data)
+            // Android 14+ requires a callback to be registered before creating the display
+            mp.registerCallback(object : MediaProjection.Callback() {
+                override fun onStop() { stopSelf() }
+            }, Handler(Looper.getMainLooper()))
+            mediaProjection = mp
+            setupVirtualDisplay()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            stopSelf()
+            return START_NOT_STICKY
+        }
+        return START_NOT_STICKY
     }
 
     private fun setupVirtualDisplay() {

@@ -2,6 +2,7 @@ package com.aether.agent.service
 
 import android.app.*
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
@@ -24,7 +25,11 @@ class CursorTriggerService : Service() {
     override fun onCreate() {
         super.onCreate()
         try {
-            startForeground(NOTIF_ID, notif())
+            if (Build.VERSION.SDK_INT >= 34) {
+                startForeground(NOTIF_ID, notif(), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+            } else {
+                startForeground(NOTIF_ID, notif())
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

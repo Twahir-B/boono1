@@ -46,7 +46,7 @@ fun PermissionsScreen(nav: NavController) {
 
             PermissionItem(
                 title = "Accessibility",
-                body = "Notch gestures, Quick Cursor, and agent taps/swipes. Does not read passwords or log keystrokes.",
+                body = "Notch gestures, Quick Cursor, and agent taps/swipes. Does not read passwords or log keystrokes. On Android 13+, first open App info → ⋮ menu → Allow restricted settings, or this toggle stays greyed out.",
                 onOpen = {
                     context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
                 }
@@ -64,8 +64,8 @@ fun PermissionsScreen(nav: NavController) {
                 }
             )
             PermissionItem(
-                title = "Notifications access (optional)",
-                body = "Feeds selected notifications and media into the Island.",
+                title = "Notification access (for Island)",
+                body = "Required for the Island to show notifications and now-playing media. Same restricted-settings step as Accessibility on Android 13+.",
                 onOpen = {
                     context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 }
